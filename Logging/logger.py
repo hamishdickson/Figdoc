@@ -5,6 +5,8 @@ import logging
 class pdfLogger(object):
     """
     General use logger for Figdocs
+
+    @TODO get this production ready
     """
 
     _instance = None
