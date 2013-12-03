@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="windows-1252" standalone="yes"?>
+<!--'Document created by Figaro Pack Printing on 2013-12-02 at 18.58.39'  -->
+<Pack>
+<Routing>
+<Header1>
+<ClientNumber>1014462</ClientNumber>
+<PersonCode>00222309000</PersonCode>
+<RoutingFlags>11223344EM6!778!9!10</RoutingFlags>
+<ImagePath>c:\jpegs\</ImagePath>
+<JobName>PROCPRINT</JobName>
+<JobUser>TALBOTJ</JobUser>
+<JobNumber>913716</JobNumber>
+<JobRunDay>02</JobRunDay>
+<JobRunMonth>12</JobRunMonth>
+<JobRunYear>13</JobRunYear>
+<JobSwitches>00000000</JobSwitches>
+<JobType>0</JobType>
+<CurrentLibrary>F63HLDDBR2</CurrentLibrary>
+<JobUserText>James Talbot -</JobUserText>
+<PortfolioLevelPrint>N</PortfolioLevelPrint>
+<JobEnvironment>F6</JobEnvironment>
+<SystemCode>STOCKTRADE</SystemCode>
+<LpFlag>11</LpFlag>
+<FoFlag>22</FoFlag>
+<PoFlag>33</PoFlag>
+<EaFlag>44</EaFlag>
+<EmFlag>EM</EmFlag>
+<FtFlag>6!</FtFlag>
+</Header1>
+<Header2>
+<AttachmentName>Document Centre</AttachmentName>
+<MessageSubject>Message Centre</MessageSubject>
+<UpdateFlags>YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY</UpdateFlags>
+<LinesPerPage>999</LinesPerPage>
+<ImageParameters>001.2000001.0000007.0000000.3300000.0000</ImageParameters>
+<SaveDirectory>c:\planet press\F63HLDDBR2\</SaveDirectory>
+<JobEnvironment>F63HOLDGAR</JobEnvironment>
+<JobRunTime>185839667</JobRunTime>
+<CopyNumber>0001</CopyNumber>
+</Header2>
+<Header3>
+<EmailAddress>jhc.co.uk</EmailAddress>
+</Header3>
+<Header4>
+<AttachmentSubject>Transaction Document</AttachmentSubject>
+<MessageSubject>Transaction Message</MessageSubject>
+<Image2Parms>006.8000004.3000000.7600004.0000000.0000</Image2Parms>
+<PpForm>EMLALTCONT</PpForm>
+<PackNumber>0000031</PackNumber>
+<PrintNumber>0000002</PrintNumber>
+<PpFileName>EMLALTCONT</PpFileName>
+</Header4>
+<Header5>
+<FolderFile>EMLALTCONT.000000000107389.EM000</FolderFile>
+<FolderName>c:\planet press\</FolderName>
+<DocumentType>HITEC</DocumentType>
+<DocumentId>000000000820819</DocumentId>
+<TemplateName>OMX - PP Other</TemplateName>
+<TemplateNumber>000060000000013</TemplateNumber>
+<ContPos>00</ContPos>
+<PrintStartDate>000000</PrintStartDate>
+<PrintEndDate>131202</PrintEndDate>
+<AddressCode>999914757</AddressCode>
+<MailFlag>U</MailFlag>
+<ValuationCurrency>GBP</ValuationCurrency>
+<ValuationFormat>00000001</ValuationFormat>
+<EndRequest>000000000107389</EndRequest>
+<CallingProgram>used for</CallingProgram>
+</Header5>
+<DeliveryAddress>
+<NameAndAddress>
+<Name>MRS LANI BLACK</Name>
+<Address1>1 JHC HOUSE</Address1>
+<Address2>JHC STREET</Address2>
+<Address3>LONDON</Address3>
+<Address4>UNITED KINGDOM</Address4>
+<Address5>JHC 111</Address5>
+<AccountNumber>1014462</AccountNumber>
+<Product>ISA</Product>
+<Mode>Mrs Black</Mode>
+<PostSave>JHC 111</PostSave>
+<FromDate>00000000</FromDate>
+<ToDate>20131202</ToDate>
+<OverallObjective>N</OverallObjective>
+<ClientName>MRS LANI BLACK</ClientName>
+<ProductDescription>ISA</ProductDescription>
+<PortfolioName>LANI BLACK</PortfolioName>
+<CategoryTypeDescription>Execution Only</CategoryTypeDescription>
+<DateofDeath>00000000</DateofDeath>
+<MainTsaCategory>X</MainTsaCategory>
+<ClientTypeDescription>Execution Only</ClientTypeDescription>
+<CountryOfResidence>GB</CountryOfResidence>
+<SignoffMode>S</SignoffMode>
+<Sweep>N</Sweep>
+<PersonEmail>jhc.co.uk</PersonEmail>
+</NameAndAddress>
+</DeliveryAddress>
+</Routing>
+<Print>
+<PrintCode>EMLALTCONT</PrintCode>
+<NameAndAddress>
+<Name>MRS LANI BLACK</Name>
+<Address1>1 JHC HOUSE</Address1>
+<Address2>JHC STREET</Address2>
+<Address3>LONDON</Address3>
+<Address4>UNITED KINGDOM</Address4>
+<Address5>JHC 111</Address5>
+<AccountNumber>1014462</AccountNumber>
+<Product>ISA</Product>
+<Mode>Mrs Black</Mode>
+<PostSave>JHC 111</PostSave>
+<FromDate>00000000</FromDate>
+<ToDate>20131202</ToDate>
+<OverallObjective>N</OverallObjective>
+<ClientName>MRS LANI BLACK</ClientName>
+<ProductDescription>ISA</ProductDescription>
+<PortfolioName>LANI BLACK</PortfolioName>
+<CategoryTypeDescription>Execution Only</CategoryTypeDescription>
+<DateofDeath>00000000</DateofDeath>
+<MainTsaCategory>X</MainTsaCategory>
+<ClientTypeDescription>Execution Only</ClientTypeDescription>
+<CountryOfResidence>GB</CountryOfResidence>
+<SignoffMode>S</SignoffMode>
+<Sweep>N</Sweep>
+<PersonEmail>jhc.co.uk</PersonEmail>
+</NameAndAddress>
+</Print>
+</Pack>

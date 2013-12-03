@@ -1,0 +1,6 @@
+Dear Client
+
+This is a plain text message because you can't see HTML, probably.
+
+Thanks
+Figaro

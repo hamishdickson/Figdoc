@@ -1,0 +1,15 @@
+{
+    "emailing": {
+        "sender": "abc",
+        "server": "test"
+    },
+	
+	"grabber": {
+		"fromdir": "/home/talbotj/testxmlfiles",
+		"todir": "C:\\Users\\talbotj\\Desktop\\testftp",
+		"interval": 5,
+		"user": "yyy",
+		"password": "xxx",
+		"iseries": "tracey"
+	}
+}
