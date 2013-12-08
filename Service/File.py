@@ -2,4 +2,9 @@ __author__ = 'DicksonH'
 
 class File():
     name = "XML file name"
-    path = "XML file path"
+
+    def __init__(name, self):
+    	self.name = name
+
+    def get_file_name():
+    	return name

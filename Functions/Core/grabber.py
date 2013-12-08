@@ -36,25 +36,26 @@ class Grabber():
             print("error connecting: " + str(e))
             raise e
 
-    def go(self):
+    def go(self, outLocation=self._outdir):
 
         try:
             while True:
-                self._transfer_files()
+                self._transfer_files(outLocation)
                 time.sleep(self._wait_time)
         except KeyboardInterrupt:
             print("exiting due to keyboard interruption")
         except Exception as e:
             print("exiting due to unknown exception: " + str(e))
 
-    def _transfer_files(self):
+    def _transfer_files(self, outLocation):
         """Find out what's on the iSeries, then copy it across"""
 
         files = self._ftp.nlst()
         if len(files) > 0:
             for fil in files:
                 print("File on the i: " + str(fil))
-                outfil = open(os.path.join(self._outdir, fil), "w")
+                # HWD outfil = open(os.path.join(self._outdir, fil), "w")
+                outfil = open(os.path.join(outLocation, fil), "w")
                 print("New local file: " + str(outfil))
                 self._ftp.retrbinary("RETR " + fil, outfil.write)
                 outfil.close()
