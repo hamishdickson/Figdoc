@@ -17,6 +17,11 @@ class FormRunner():
         self._module = importlib.import_module("pdfprod.forms." + self._form_name)
 
     def produce_pdf(self, outdir):
+        """Call the 'run' function in the module that we loaded in __init__.
+
+        This should produce the PDF based on the XML that we pass in and place it
+        in the output directory that we tell it to.
+        """
 
         self._module.run(self._datafile, outdir)
 
@@ -28,6 +33,6 @@ class FormRunner():
 
 if __name__ == '__main__':
 
-    r = FormRunner(r"C:\Users\talbotj\Desktop\testftp" +
+    r = FormRunner(r"C:\Users\talbotj\Desktop\testftp\inputxml" +
                    r"\CONTBD.09213F0211U.PO.20131205.130119.xml")
-    r.produce_pdf(r"C:\Users\talbotj\Desktop")
+    r.produce_pdf(r"C:\Users\talbotj\Desktop\testftp\pdfs")

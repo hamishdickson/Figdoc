@@ -15,19 +15,19 @@ def get_files_from_iSeries(self, location):
 
     
 def get_next_file_and_process(self, location):
-	log.writeInfo("Get a file listing and process each file")
-	file_listing = os.listdir(location)
-	if len(file_listing) > 0:
-		for x in file_listing:
-			log.writeInfo("Process file " + x)
-			process_xml_file(x)
-	else:
-		log.writeInfo("There ain't out to process ere...")
-	
+    log.writeInfo("Get a file listing and process each file")
+    file_listing = os.listdir(location)
+    if len(file_listing) > 0:
+        for x in file_listing:
+            log.writeInfo("Process file " + x)
+            process_xml_file(x)
+    else:
+        log.writeInfo("There ain't out to process ere...")
+
 def process_xml_file(self, in_file):
-	tree = ET.parse(in_file)
-	root = tree.getroot()
-	log.writeInfo("Root of file " + in_file + " is " + root)
+    tree = ET.parse(in_file)
+    root = tree.getroot()
+    log.writeInfo("Root of file " + in_file + " is " + root)
 
 log = logger.pdfLogger()
 log.writeInfo("Starting process up")

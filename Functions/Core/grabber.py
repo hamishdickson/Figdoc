@@ -3,7 +3,7 @@ __author__ = "TalbotJ"
 import os
 import ftplib
 import time
-import figconfig
+import figconfig.figconfig as figconfig
 
 
 class Grabber():
