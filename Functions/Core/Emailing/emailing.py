@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from mimetypes import guess_type
 from email.mime.base import MIMEBase
 from email.encoders import encode_base64
-import figconfig
+import figconfig.figconfig
 
 
 class Emailer():
@@ -14,7 +14,7 @@ class Emailer():
     def __init__(self):
         """Just establish a connection to the SMTP server and retrieve config"""
 
-        self._config = figconfig.get_config("emailing")
+        self._config = figconfig.figconfig.get_config("emailing")
         self._server = smtplib.SMTP(self._get_server_address())
 
     def _get_server_address(self):
