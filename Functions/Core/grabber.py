@@ -38,7 +38,9 @@ class Grabber():
             print("error connecting: " + str(e))
             raise e
 
-    def go(self, out_location=self._outdir):
+    def go(self, out_location=None):
+        if out_location is None:
+            out_location = self._outdir
 
         try:
             while True:

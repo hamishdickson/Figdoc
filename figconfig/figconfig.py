@@ -14,7 +14,7 @@ def get_config(module):
 # probably good for us...
 # TODO: find a proper way to store/find the config file
 usr = os.getenv('USERPROFILE')
-conf_file = os.path.join(usr, 'Figdocs/configuration/testconfig.json')
+conf_file = os.path.join(usr, 'Documents\\Github\\Figdoc\\configuration\\testconfig.json')
 
 f = open(conf_file, "r")
 _config = json.loads(f.read())
