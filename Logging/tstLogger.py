@@ -5,7 +5,7 @@ __author__ = 'DicksonH'
 
 def main():
     log = logger.pdfLogger()
-    log.writeInfo("this is a test")
+    log.write_info("this is a test")
 
 if __name__ == '__main__':
     main()

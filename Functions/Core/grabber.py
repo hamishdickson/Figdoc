@@ -1,9 +1,11 @@
 __author__ = "TalbotJ"
 
+# HWD overload go()
+
 import os
 import ftplib
 import time
-import figconfig.figconfig as figconfig
+import figconfig.figconfig as figConfig
 
 
 class Grabber():
@@ -16,7 +18,7 @@ class Grabber():
 
     def __init__(self):
 
-        self._config = figconfig.get_config("grabber")
+        self._config = figConfig.get_config("grabber")
         self._outdir = self._config["todir"]
         self._fromdir = self._config["fromdir"]
         self._wait_time = self._config["interval"]
@@ -36,18 +38,18 @@ class Grabber():
             print("error connecting: " + str(e))
             raise e
 
-    def go(self, outLocation=self._outdir):
+    def go(self, out_location=self._outdir):
 
         try:
             while True:
-                self._transfer_files(outLocation)
+                self._transfer_files(out_location)
                 time.sleep(self._wait_time)
         except KeyboardInterrupt:
             print("exiting due to keyboard interruption")
         except Exception as e:
             print("exiting due to unknown exception: " + str(e))
 
-    def _transfer_files(self, outLocation):
+    def _transfer_files(self, out_location):
         """Find out what's on the iSeries, then copy it across"""
 
         files = self._ftp.nlst()
@@ -55,7 +57,7 @@ class Grabber():
             for fil in files:
                 print("File on the i: " + str(fil))
                 # HWD outfil = open(os.path.join(self._outdir, fil), "w")
-                outfil = open(os.path.join(outLocation, fil), "w")
+                outfil = open(os.path.join(out_location, fil), "w")
                 print("New local file: " + str(outfil))
                 self._ftp.retrbinary("RETR " + fil, outfil.write)
                 outfil.close()
