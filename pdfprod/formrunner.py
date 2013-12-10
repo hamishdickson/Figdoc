@@ -26,6 +26,7 @@ class FormRunner():
         self._module.run(self._datafile, outdir)
 
     def _get_form_name(self, inputfile):
+        """Fetch the form name out of the XML file"""
 
         pack = parse(inputfile).getroot()
         form = pack.findtext("./Routing[1]/Header4[1]/PpFileName[1]")
