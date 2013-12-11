@@ -32,16 +32,19 @@ class PdfLogger(object):
         return None
 
     @staticmethod
-    def _end_log(self):
+    def end_log():
         # not sure we have to do much here
-        self.writeInfo("======================")
-        self.writeInfo("ENDING LOG" + "timestamp")
-        self.writeInfo("======================")
+        logging.info("========================================")
+        logging.info("ENDING LOG" + "timestamp")
+        logging.info("========================================")
 
     @staticmethod
     def _create_log():
         # need to add the date to the filename
         logging.basicConfig(filename='test.log',level=logging.DEBUG)
+        logging.info("==========================================")
+        logging.info("STARTING LOG" + "timestamp")
+        logging.info("==========================================")
 
     def __init__(self):
         self._create_log()

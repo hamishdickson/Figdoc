@@ -9,6 +9,10 @@ import time
 
 
 class Service():
+    """This is the main service. It initialises everything.
+
+    This is not bespoke script."""
+
     def __init__(self):
         self._config = figconfig.get_config("service")
         self.location = self._config["todir"]
@@ -39,17 +43,16 @@ class Service():
 
 
 if __name__ == '__main__':
-    """This is the main service. It initialises everything.
-
-    This is not bespoke script."""
-
     log = PdfLogger()
     log.write_info("Starting process up")
 
     run_it = Service()
 
-    while True:
-        run_it.get_files_from_i(run_it.location)
-        run_it.get_next_file_and_process(run_it.location)
-        assert isinstance(run_it.wait_time, int)
-        time.sleep(run_it.wait_time)
+    try:
+        while True:
+            run_it.get_files_from_i(run_it.location)
+            run_it.get_next_file_and_process(run_it.location)
+            assert isinstance(run_it.wait_time, int)
+            time.sleep(run_it.wait_time)
+    finally:
+        log.end_log()
