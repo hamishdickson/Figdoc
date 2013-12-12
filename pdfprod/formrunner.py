@@ -36,6 +36,8 @@ class FormRunner():
 
 if __name__ == '__main__':
 
+    import os
     r = FormRunner(r"C:\Users\talbotj\Desktop\testftp\inputxml" +
                    r"\CONTBD.09213F0211U.PO.20131205.130119.xml")
     r.produce_pdf(r"C:\Users\talbotj\Desktop\testftp\pdfs")
+    os.system(r'start "" /max "C:\Users\talbotj\Desktop\testftp\pdfs\CONTBD.09213F0211U.PO.20131205.130119.pdf"')
