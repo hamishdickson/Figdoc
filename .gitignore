@@ -1,2 +1,7 @@
 # files to ignore
+
+# PyCharm stuff
 .idea/
+
+# compiled objects
+*.pyc
