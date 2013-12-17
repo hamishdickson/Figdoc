@@ -1,9 +1,10 @@
 __author__ = 'DicksonH'
 
-from functions.core.grabber import Grabber
 from logger.logger import PdfLogger
 from figconfig import figconfig
 from xml.etree.ElementTree import parse
+from threading import Thread
+from grabberService import GrabberService
 import os
 import time
 
@@ -18,13 +19,6 @@ class Service():
         self.location = self._config["todir"]
         self.wait_time = self._config["interval"]
 
-    @staticmethod
-    def get_files_from_i(in_location):
-        # start the FTP process and get a file
-        log.write_info("Getting all waiting xml files from iSeries")
-        grab = Grabber()
-        grab.go(in_location)  # this should pull everything to the directory in the config file
-
     def get_next_file_and_process(self, in_location):
         log.write_info("Get a file listing and process each file")
         file_listing = os.listdir(in_location)
@@ -35,22 +29,58 @@ class Service():
         else:
             log.write_info("There ain't out to process ere...")
 
+    def email_attachment_it(self):
+        pass
+
+    def email_message_it(self):
+        pass
+
+    def line_print_it(self):
+        pass
+
     @staticmethod
-    def process_xml_file(in_file):
+    def get_routing_flags(self, in_tree):
+        pass
+
+    @staticmethod
+    def process_xml_file(self, in_file):
         tree = parse(in_file)
         root = tree.getroot()
         log.write_info("Root of file " + in_file + " is " + root)
 
+        ### Main line ###
+
+        # archive a copy
+
+        # get the routing flags and the file
+        self.get_routing_flags(tree)
+
+        # NOTE: there are no switch/case statements in python (apparently)
+
+        # if routing flag = LP ... then connect to config'd printer and print it
+
+        # if routing flag = EA then get the email address and send the PDF
+
+        # if routing flag = EM then send an email message
+
+        # else, log an error
+
 
 if __name__ == '__main__':
     log = PdfLogger()
-    log.write_info("Starting process up")
+    log.write_info("Starting mainService.")
+    print "Starting mainService"
+
+# create a new thread for the FTP process
+    grab = GrabberService()
+    thread = Thread(target=grab.go())
+    thread.start()
+    thread.join()
 
     run_it = Service()
 
     try:
         while True:
-            run_it.get_files_from_i(run_it.location)
             run_it.get_next_file_and_process(run_it.location)
             assert isinstance(run_it.wait_time, int)
             time.sleep(run_it.wait_time)
