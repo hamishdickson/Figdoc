@@ -1,3 +1,5 @@
+from logger import figconfig as figConfig
+
 __author__ = "TalbotJ"
 
 # HWD overload go()
@@ -5,7 +7,6 @@ __author__ = "TalbotJ"
 import os
 import ftplib
 import time
-import figconfig.figconfig as figConfig
 
 
 class Grabber():

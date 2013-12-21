@@ -18,6 +18,7 @@ __author__ = 'DicksonH'
 import logging
 import time
 import datetime
+import os
 import figconfig as figConfig
 
 
@@ -25,8 +26,8 @@ class FigdocLogger():
 
     _log_to_i = False
     _daily_log = False
-    _local_file_location = ""
-    _local_file_name = "logs/localLog.log"
+    _local_file_location = "logs"
+    _local_file_name = "localLog.log"
     _is_instance = False
 
     @staticmethod
@@ -42,7 +43,7 @@ class FigdocLogger():
             try:
                 #get the log configuration
                 print "trying to get the config"
-                self._config = figConfig.get_config("logger")
+                self._config = figConfig.get_config("logging")
                 FigdocLogger._log_to_i = self._config["logToI"]
                 FigdocLogger._local_file_location = self._config["location"]
                 FigdocLogger._local_file_name = self._config["fileName"]
@@ -57,13 +58,21 @@ class FigdocLogger():
                     print "write here and say process is starting up"
                 except:
                     print "BAD BAD ERROR - COULDN'T LOG TO I"
-                    logging.basicConfig(filename=FigdocLogger._local_file_name, level=logging.DEBUG)
+                    self.file = FigdocLogger._local_file_location + "\\" + FigdocLogger._local_file_name
+                    if not os.path.exists(FigdocLogger._local_file_location):
+                        os.makedirs(FigdocLogger._local_file_location)
+
+                    logging.basicConfig(filename=self.file, level=logging.DEBUG)
                     logging.info("=========================================================================")
                     logging.info(self._get_datetime() + "STARTING LOG")
                     logging.exception(self._get_datetime() + "Failed attempt to write to i")
                     logging.info("=========================================================================")
             else:
-                logging.basicConfig(filename=FigdocLogger._local_file_name, level=logging.DEBUG)
+                self.file = FigdocLogger._local_file_location + "\\" + FigdocLogger._local_file_name
+                if not os.path.exists(FigdocLogger._local_file_location):
+                    os.makedirs(FigdocLogger._local_file_location)
+
+                logging.basicConfig(filename=self.file, level=logging.DEBUG)
                 logging.info("=========================================================================")
                 logging.info(self._get_datetime() + "STARTING LOG")
                 logging.info("=========================================================================")

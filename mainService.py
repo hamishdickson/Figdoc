@@ -1,7 +1,8 @@
+from logger import figconfig
+
 __author__ = 'DicksonH'
 
 from logger.logger import PdfLogger
-from figconfig import figconfig
 from xml.etree.ElementTree import parse
 from threading import Thread
 from grabberService import GrabberService
