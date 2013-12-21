@@ -38,6 +38,8 @@ class FigdocLogger():
     _local_file_name = "localLog.log"
     _is_instance = False
 
+    _log_name = ""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -54,11 +56,39 @@ class FigdocLogger():
     @staticmethod
     def _failed_i_write(msg):
         # only come in here if the write to the i failed
+        FigdocLogger._sort_out_file_name()
         if not FigdocLogger._failed_i_write_warning:
             FigdocLogger._failed_i_write_warning = True
             logging.error(FigdocLogger._get_datetime() + "Failed write to iSeries")
 
         logging.info(FigdocLogger._get_datetime() + msg)
+
+    @staticmethod
+    def _todays_log_name():
+        # Returns the name of today's log
+        today = time.strftime("%Y%m%d")
+        return today + "_" + FigdocLogger._local_file_name
+
+    @staticmethod
+    def _create_new_log_file():
+        file = FigdocLogger._local_file_location + "\\" + FigdocLogger._todays_log_name()
+        try:
+            if not os.path.exists(FigdocLogger._local_file_location):
+                os.makedirs(FigdocLogger._local_file_location)
+
+            logging.basicConfig(filename=file, level=logging.DEBUG)
+            FigdocLogger._log_name = file
+        except:
+            # note: if this dies, any log messages will go to the command line
+            print "Create new log failed. Please stop this process and contact your administrator"
+
+    @staticmethod
+    def _sort_out_file_name():
+        if FigdocLogger._log_name == FigdocLogger._todays_log_name():
+            # then we're good, go home ...
+            pass
+        else:
+            FigdocLogger._create_new_log_file()
 
     def __init__(self):
         if not FigdocLogger._is_instance:
@@ -81,26 +111,15 @@ class FigdocLogger():
                 try:
                     print "write here and say process is starting up"
                 except:
-                    print "BAD BAD ERROR - COULDN'T LOG TO I"
-                    self.file = FigdocLogger._local_file_location + "\\" + FigdocLogger._local_file_name
-                    if not os.path.exists(FigdocLogger._local_file_location):
-                        os.makedirs(FigdocLogger._local_file_location)
+                    print "BAD BAD ERROR - COULDN'T LOG TO I ... log locally instead"
 
-                    print "Writing log: " + self.file
-
-                    logging.basicConfig(filename=self.file, level=logging.DEBUG)
+                    FigdocLogger._sort_out_file_name()
                     logging.info("=========================================================================")
                     logging.info(FigdocLogger._get_datetime() + "STARTING LOG")
                     logging.exception(FigdocLogger._get_datetime() + "Failed attempt to write to i")
                     logging.info("=========================================================================")
             else:
-                self.file = FigdocLogger._local_file_location + "\\" + FigdocLogger._local_file_name
-                if not os.path.exists(FigdocLogger._local_file_location):
-                    os.makedirs(FigdocLogger._local_file_location)
-
-                print "Writing log: " + self.file
-
-                logging.basicConfig(filename=self.file, level=logging.DEBUG)
+                FigdocLogger._sort_out_file_name()
                 logging.info("=========================================================================")
                 logging.info(FigdocLogger._get_datetime() + "STARTING LOG")
                 logging.info("=========================================================================")
@@ -126,6 +145,7 @@ class FigdocLogger():
                 FigdocLogger._failed_i_write(msg)
         else:
             # log locally
+            FigdocLogger._sort_out_file_name()
             logging.info(FigdocLogger._get_datetime() + msg)
 
     @staticmethod
@@ -138,6 +158,7 @@ class FigdocLogger():
                 FigdocLogger._failed_i_write(msg)
         else:
             # log locally
+            FigdocLogger._sort_out_file_name()
             logging.warning(FigdocLogger._get_datetime() + msg)
 
     @staticmethod
@@ -150,6 +171,7 @@ class FigdocLogger():
                 FigdocLogger._failed_i_write(msg)
         else:
             # log locally
+            FigdocLogger._sort_out_file_name()
             logging.error(FigdocLogger._get_datetime() + msg)
 
 
