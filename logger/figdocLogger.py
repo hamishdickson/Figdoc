@@ -18,11 +18,13 @@ __author__ = 'DicksonH'
 import logging
 import time
 import datetime
+import figconfig as figConfig
 
 
 class FigdocLogger():
 
     _log_to_i = False
+    _daily_log = False
     _local_file_location = ""
     _local_file_name = "logs/localLog.log"
     _is_instance = False
@@ -40,6 +42,11 @@ class FigdocLogger():
             try:
                 #get the log configuration
                 print "trying to get the config"
+                self._config = figConfig.get_config("logger")
+                FigdocLogger._log_to_i = self._config["logToI"]
+                FigdocLogger._local_file_location = self._config["location"]
+                FigdocLogger._local_file_name = self._config["fileName"]
+                FigdocLogger._daily_log = self._config["dailyLog"]
             except IOError as e:
                 print "There was an error getting the logging configuration. Local logging will be used"
                 # use the hard coded config
