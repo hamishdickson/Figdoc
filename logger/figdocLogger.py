@@ -13,7 +13,7 @@ __author__ = 'DicksonH'
 
 
 # So it turns out that that core python logging class is a bit odd, in that it's designed so you don't subclass it,
-# the idea is that in stead you can call it from lots of different places and it uses the same log
+# the idea is that instead you can call it from lots of different places and it uses the same log
 
 import logging
 import time
@@ -89,10 +89,37 @@ class FigdocLogger():
             # log locally
             logging.info(self._get_datetime() + msg)
 
+    def write_warning(self, msg):
+        if self._log_to_i:
+            try:
+                # connect to the iseries
+                print "logging to i"
+            except:
+                logging.exception("Couldn't write to iSeries")
+                logging.warning(self._get_datetime() + msg)
+        else:
+            # log locally
+            logging.warning(self._get_datetime() + msg)
 
+    def write_error(self, msg):
+        if self._log_to_i:
+            try:
+                # connect to the iseries
+                print "logging to i"
+            except:
+                logging.exception("Couldn't write to iSeries")
+                logging.error(self._get_datetime() + msg)
+        else:
+            # log locally
+            logging.error(self._get_datetime() + msg)
+
+# quick test stub ...
 if __name__ == '__main__':
     a = FigdocLogger()
     a.write_info("write to i")
 
     b = FigdocLogger()
     b.write_info("second instance")
+
+    a.write_warning("this is a warning")
+    b.write_catastrophe("arrgh! stuff broke!!")
