@@ -1,7 +1,7 @@
 __author__ = 'DicksonH'
 
 from functions.core.grabber import Grabber
-from logger.logger import PdfLogger
+from logger.figdocLogger import FigdocLogger
 
 
 class GrabberService():
@@ -9,7 +9,7 @@ class GrabberService():
 
     Can be called directly or from the MainService"""
     def __init__(self):
-        log = PdfLogger()
+        log = FigdocLogger()
         print "FigDoc grabber (FTP) service starting. Use Ctrl-C to end"
         log.write_info("Grabber (FTP) service starting up. Use Ctrl-C to end.")
         # get the config

@@ -2,7 +2,7 @@ from logger import figconfig
 
 __author__ = 'DicksonH'
 
-from logger.logger import PdfLogger
+from logger.logger import FigdocLogger
 from xml.etree.ElementTree import parse
 from threading import Thread
 from grabberService import GrabberService
@@ -68,7 +68,7 @@ class Service():
 
 
 if __name__ == '__main__':
-    log = PdfLogger()
+    log = FigdocLogger()
     log.write_info("Starting mainService.")
     print "Starting mainService"
 
