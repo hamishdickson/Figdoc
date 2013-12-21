@@ -16,7 +16,8 @@ def get_config(module):
 # TODO: find a proper way to store/find the config file
 usr = os.getenv('USERPROFILE')
 
-conf_file = os.path.join(usr, 'Figdoc\\configuration\\testconfig.json')
+conf_file = os.path.join(usr, 'testconfig.json')
+
 try:
     f = open(conf_file, "r")
 except IOError as e:
@@ -28,7 +29,7 @@ else:
 
 
 if __name__ == '__main__':
-    c = get_config('emailing')
+    c = get_config('grabber')
     print(c)
     print(c["server"])
     print(c["sender"])
