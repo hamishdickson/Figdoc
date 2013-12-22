@@ -1,5 +1,9 @@
 __author__ = 'DicksonH'
 
+#
+# Custom logger for Figdocs
+#
+
 # So, basically ... don't ever use logging directly, instead use this class. This will work out if you should be
 # logging locally or to the iSeries ... and if something has gone wrong (like the connection to the i gets lost),
 # this will deal with it for you (and write locally)
@@ -40,6 +44,7 @@ class FigdocLogger():
 
     _log_name = ""
 
+    # constants for logging level
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -50,7 +55,7 @@ class FigdocLogger():
     @staticmethod
     def _get_datetime():
         ts = time.time()
-        st = "" + datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ": "
+        st = "" + datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S') + ": "
         return st
 
     @staticmethod
@@ -173,6 +178,21 @@ class FigdocLogger():
             # log locally
             FigdocLogger._sort_out_file_name()
             logging.error(FigdocLogger._get_datetime() + msg)
+
+    @staticmethod
+    def controlled_shut_down(msg):
+        if FigdocLogger._log_to_i:
+            try:
+                # connect to the iseries
+                print "log controlled shut down to i"
+            except:
+                FigdocLogger._failed_i_write(msg)
+        else:
+            # log locally
+            FigdocLogger._sort_out_file_name()
+            logging.info("*************************************************************************")
+            logging.info(FigdocLogger._get_datetime() + msg)
+            logging.info("*************************************************************************")
 
 
 # quick test stub ...

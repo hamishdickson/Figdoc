@@ -1,8 +1,17 @@
-from logger import figconfig
-
 __author__ = 'DicksonH'
 
-from logger.logger import FigdocLogger
+#
+# Main Service for Figdocs
+#
+# This will start everything up. By default it will create a thread to go and FTP everything from the iSeries
+# and a thread for each new file it finds
+#
+# This is core functionality, do not change
+
+# @TODO: find a way to make the routing logic bespoke
+
+from logger import figconfig
+from logger.figdocLogger import FigdocLogger
 from xml.etree.ElementTree import parse
 from threading import Thread
 from grabberService import GrabberService
@@ -13,7 +22,7 @@ import time
 class Service():
     """This is the main service. It initialises everything.
 
-    This is not bespoke script."""
+    This is not bespoke script. Do not change"""
 
     def __init__(self):
         self._config = figconfig.get_config("service")
@@ -67,12 +76,16 @@ class Service():
         # else, log an error
 
 
+#
+# This is the recommended entry point for Figdocs
+#
 if __name__ == '__main__':
     log = FigdocLogger()
     log.write_info("Starting mainService.")
-    print "Starting mainService"
+    print "Starting main Figdoc service."
 
-# create a new thread for the FTP process
+    # create a new thread for the FTP process
+    log.write_info("Creating a new thread for the grabbers")
     grab = GrabberService()
     thread = Thread(target=grab.go())
     thread.start()
@@ -86,4 +99,4 @@ if __name__ == '__main__':
             assert isinstance(run_it.wait_time, int)
             time.sleep(run_it.wait_time)
     finally:
-        log.end_log()
+        log.controlled_shut_down("Shutting down from mainService")
