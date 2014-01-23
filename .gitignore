@@ -4,4 +4,4 @@
 .idea/
 
 # compiled objects
-*.pyc
+*.pyclogger/figOdbc.py
