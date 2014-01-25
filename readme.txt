@@ -17,4 +17,4 @@ For the webapp
 HWD update 25/01/14
 For now at least we're going to run a node.js webapp - this should be sufficient for the traffic expected
 
-We've included the modules required to run the webapp as a temp solution, on first run, please cd to Figdoc/webapp/app and run npm install
+We've included the modules required to run the webapp as a temp solution, if you would like to update the modules, please cd to Figdoc/webapp/app and call npm update, this will update the modules from package.json
