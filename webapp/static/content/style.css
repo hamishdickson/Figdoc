@@ -1,4 +1,72 @@
+/* HWD 25/01/24 Creation */
+
+/* Shamelessly nabbed from snowbear.co */
+
+/* Large desktop */
+@media (min-width: 980px) {
+       body {
+       	    padding-top: 60px;
+       }
+       .linediv-l {
+            border-right: 1px white solid;
+       }
+       .linediv-r {
+            border-left: 1px white solid;
+       }
+}
+
+/* I don't know why .. but emacs is having a right hissy fit today .. please excuse the bad formatting */
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    .copy {
+        padding: 2.5% 10%;
+    }
+    .linediv-l {
+        border-bottom: 1px white solid;
+    }
+    .linediv-r {
+        border-top: 1px white solid;
+    }
+}
+
+/* All form factors */
+
+/* Main body and headings */
 body {
-     font-family: Helvetica, Arian New, Arial;
-     font-size: 10pt;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+p.lead {
+    padding-top: 1.5%;
+    font-size: 24px;
+    line-height: 30px;
+}
+/*p {
+    font-size: 12px;
+    line-height: 24px;
+}*/
+p {
+    font-size: 1em;
+    line-height: 24px;
+}
+/* Marketing Copy and Footer */
+.copy {
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    text-align: justify;
+}
+.footer {
+    color: #cccccc;
+    text-align: center;
+}
+.footer p {
+    font-size: 11px;
+}
+.footer a {
+    color: #ccccff;
+}
+/* Website update */
+.update {
+        color: #909090;
 }
