@@ -1,0 +1,9 @@
+{
+	"name": "Figdocs webapp",
+	"description": "Webapp to control Figdocs a bit easier",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"express": "3.x"
+	}
+}
