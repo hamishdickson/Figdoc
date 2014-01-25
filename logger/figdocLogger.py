@@ -24,13 +24,15 @@ __author__ = 'DicksonH'
 # later ... but right now it makes sense
 
 # @TODO: check to see if using the write log, if not .. create a new one
-# @TODO: basically do all the iseries work!
+# @TODO: test the iSeries connector
+# @TODO: I'm pretty sure this singleton implementation is wrong ... test it good
 
 import logging
 import time
 import datetime
 import os
 import figconfig as figConfig
+from iSeriesConnector import ISeriesComs
 
 
 class FigdocLogger():
@@ -51,6 +53,8 @@ class FigdocLogger():
 
     # This gets set on when a write to the i failed ... switched off whenever a successful write happens
     _failed_i_write_warning = False
+
+    _coms = None
 
     @staticmethod
     def _get_datetime():
@@ -114,7 +118,12 @@ class FigdocLogger():
             # create the log/connection
             if FigdocLogger._log_to_i:
                 try:
-                    print "write here and say process is starting up"
+                    print "Attempting to log to iSeries"
+                    FigdocLogger._coms = ISeriesComs()
+                    FigdocLogger._coms.write_new_line_to_i_series_log("=========================================================================")
+                    FigdocLogger._coms.write_new_line_to_i_series_log("STARTING LOG")
+                    FigdocLogger._coms.write_new_line_to_i_series_log("=========================================================================")
+
                 except:
                     print "BAD BAD ERROR - COULDN'T LOG TO I ... log locally instead"
 
@@ -144,8 +153,8 @@ class FigdocLogger():
     def write_info(msg):
         if FigdocLogger._log_to_i:
             try:
-                # connect to the iseries
-                print "logging to i"
+                # should already have a connection here
+                FigdocLogger._coms.write_new_line_to_i_series_log(msg)
             except:
                 FigdocLogger._failed_i_write(msg)
         else:
@@ -157,8 +166,7 @@ class FigdocLogger():
     def write_warning(msg):
         if FigdocLogger._log_to_i:
             try:
-                # connect to the iseries
-                print "logging to i"
+                FigdocLogger._coms.write_new_line_to_i_series_log(msg)
             except:
                 FigdocLogger._failed_i_write(msg)
         else:
@@ -170,8 +178,7 @@ class FigdocLogger():
     def write_error(msg):
         if FigdocLogger._log_to_i:
             try:
-                # connect to the iseries
-                print "logging to i"
+                FigdocLogger._coms.write_new_line_to_i_series_log(msg)
             except:
                 FigdocLogger._failed_i_write(msg)
         else:
@@ -183,8 +190,7 @@ class FigdocLogger():
     def controlled_shut_down(msg):
         if FigdocLogger._log_to_i:
             try:
-                # connect to the iseries
-                print "log controlled shut down to i"
+                FigdocLogger._coms.write_new_line_to_i_series_log(msg)
             except:
                 FigdocLogger._failed_i_write(msg)
         else:

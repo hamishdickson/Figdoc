@@ -11,8 +11,13 @@ __author__ = 'hamishdickson'
 
 # pyodbc docs can be found at https://code.google.com/p/pyodbc/wiki/
 
+# write_new_line_to_i_series is used to write to a Figdoc log - to use this method, we
+# need to insist on a specific format for the log
+
 import pyodbc
 import figconfig as figConfig
+import time
+import datetime
 
 
 class ISeriesComs():
@@ -22,6 +27,9 @@ class ISeriesComs():
     _PWD = 'XXXX'
     _DBQ = 'DEFAULTSCHEMA'
     _EXTCOLINFO = '1'
+
+    _library = 'hwd'
+    _file = 'FigdocLog'
 
     _instance = None
 
@@ -39,6 +47,10 @@ class ISeriesComs():
             ISeriesComs._SYSTEM = self._config["system"]
             ISeriesComs._UID = self._config["username"]
             ISeriesComs._PWD = self._config["password"]
+
+            self._config = figConfig.get_config("log")
+            ISeriesComs._library = self._config["library"]
+            ISeriesComs._file = self._config["file"]
         except IOError as e:
             # decide something sensible to happen here
             print "There was an error getting the iSeries sign on configuration"
@@ -50,6 +62,17 @@ class ISeriesComs():
     def run_sql_on_i_series(self, in_statement):
         # takes a record to write :)
         self.cur.execute(in_statement)
+
+    @staticmethod
+    def _get_datetime():
+        ts = time.time()
+        st = "" + datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
+        return st
+
+    def write_new_line_to_i_series_log(self, in_description):
+        _sql_time = self._get_datetime()
+        _sql_string = 'insert into ' + _library + '/' + _file + " values('" + _sql_time + "', " + in_description + "')"
+        self.run_sql_on_i_series(_sql_string)
 
     def close_down_connection(self):
         # according to the official docs for pyodbc (https://code.google.com/p/pyodbc/wiki/Cursor), you don't actually
