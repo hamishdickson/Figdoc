@@ -71,7 +71,7 @@ class ISeriesComs():
 
     def write_new_line_to_i_series_log(self, in_description):
         _sql_time = self._get_datetime()
-        _sql_string = 'insert into ' + _library + '/' + _file + " values('" + _sql_time + "', " + in_description + "')"
+        _sql_string = 'insert into ' + ISeriesComs._library + '/' + ISeriesComs._file + " values('" + _sql_time + "', " + in_description + "')"
         self.run_sql_on_i_series(_sql_string)
 
     def close_down_connection(self):
