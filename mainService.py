@@ -3,12 +3,16 @@ __author__ = 'DicksonH'
 #
 # Main Service for Figdocs
 #
+
+# I suspect I'm going to have to rewrite this a few times ...
+
 # This will start everything up. By default it will create a thread to go and FTP everything from the iSeries
 # and a thread for each new file it finds
 #
 # This is core functionality, do not change
 
 # @TODO: find a way to make the routing logic bespoke
+# @TODO: a lot can go wrong here, catch exceptions and do something useful
 
 from logger import figconfig
 from logger.figdocLogger import FigdocLogger
@@ -39,17 +43,34 @@ class Service():
         else:
             log.write_info("There ain't out to process ere...")
 
-    def email_attachment_it(self):
+    def email_attachment(self):
         pass
 
-    def email_message_it(self):
+    def email_message(self):
         pass
 
-    def line_print_it(self):
+    def line_print(self):
         pass
 
     @staticmethod
     def get_routing_flags(self, in_tree):
+        # test stub
+        out_flag = 'LP'
+        return out_flag
+
+    def _archive_input_file(self):
+        pass
+
+    def create_pdf(self):
+        pass
+
+    def connect_to_dms(self):
+        pass
+
+    def email_admin(self, message):
+        pass
+
+    def handle_error(self):
         pass
 
     @staticmethod
@@ -60,21 +81,36 @@ class Service():
 
         ### Main line ###
 
-        # archive a copy
+        # First thing's first - archive a copy
 
         # get the routing flags and the file
-        self.get_routing_flags(tree)
+        routing_flag = self.get_routing_flags(tree)
 
         # NOTE: there are no switch/case statements in python (apparently)
+        if routing_flag == 'LP':
+            # create PDF
+            # connect to configured printer
+            # print the sucka
+            pass
 
-        # if routing flag = LP ... then connect to config'd printer and print it
+        elif routing_flag == 'EA':
+            # create PDF
+            # email it
+            pass
 
-        # if routing flag = EA then get the email address and send the PDF
+        elif routing_flag == 'EM':
+            # oh, well then we want to email a message
+            pass
 
-        # if routing flag = EM then send an email message
+        elif routing_flag == 'PO':
+            # create PDF
+            # connect to DMS
+            pass
 
-        # else, log an error
-
+        else:
+            # we have an error
+            # email the configured account details and log everything
+            pass
 
 #
 # This is the recommended entry point for Figdocs
