@@ -98,12 +98,13 @@ class ValuationTable(LongTable):
         LongTable.__init__(self, data, [reduce(lambda x, y: x + y, ValuationTable.column_widths)], row_heights,
                            style=table_style, repeatRows=1, ident='valtable')
 
-    heading_style = TableStyle([('FONT', (0, 0), (-1, -1), 'Times-Bold', 12),
+    heading_style = TableStyle([('FONT', (0, 0), (-1, -1), 'Times-Bold', 9),
                                 #('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
                                 #('ALIGN', (0, 0), (0, 0), 'LEFT'),
-                                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                                ('VALIGN', (0, 0), (-1, -1), 'CENTRE'),
                                 #('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                                #('BOX', (0, 0), (-1, -1), 0.25, colors.aqua),
+                                ('BOX', (0, 0), (-1, 0), 0.25, colors.lightgrey),
+                                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
                                 ('LEFTPADDING', (0, 0), (-1, -1), 0)])
 
     column_widths = [5*units.cm, 2.3*units.cm, 2.3*units.cm, 2.3*units.cm, 2.3*units.cm, 2.3*units.cm, 2.3*units.cm]
@@ -119,7 +120,7 @@ class ValuationTable(LongTable):
         }),
         'SubHeading': ParagraphStyle({
             'fontName': 'Times-Bold',
-            'fontSize': 12,
+            'fontSize': 9,
             'leading': 15
         })
     }
@@ -131,20 +132,38 @@ class ValuationTable(LongTable):
             if typ == 'val_totals':
                 for tot in data[typ]:
                     lines.append([ValuationTable.format_total_line(tot)])
+            if typ == 'stock_totals':
+                for tot in data[typ]:
+                    lines[:0] = [[ValuationTable.format_stock_totals(tot)]]
         return lines
+
+    @staticmethod
+    def format_stock_totals(totals):
+        paras = [
+            Paragraph(r'<para align="left"><font face="times" size=9><b>Stock Total</b></font></para>',
+                      style=ValuationTable.style_sheet['Body']),
+            Paragraph(r'<para align="right"><font face="times" size=9><b>'+totals["value"]+'</b></font></para>',
+                      style=ValuationTable.style_sheet['Body'])
+        ]
+        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm],
+                     style=ValuationTable.get_table_style())
 
     @staticmethod
     def format_total_line(totals):
         paras = [
-            Paragraph('Grand Total', style=ValuationTable.style_sheet['SubHeading']),
-            Paragraph(r'<para align="right">'+totals["value"]+'</para>', style=ValuationTable.style_sheet['SubHeading'])
+            Paragraph(r'<para align="left"><font face="times" size=9><b>Grand Total</b></font></para>',
+                      style=ValuationTable.style_sheet['SubHeading']),
+            Paragraph(r'<para align="right"><font face="times" size=9><b>'+totals["value"]+'</b></font></para>',
+                      style=ValuationTable.style_sheet['SubHeading'])
         ]
-        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm], style=ValuationTable.heading_style)
+        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm],
+                     style=ValuationTable.get_table_style())
 
 
     @staticmethod
     def format_cash_lines(data, na):
-        subhed = Paragraph('Cash', style=ValuationTable.style_sheet['SubHeading'])
+        subhed = Paragraph(r'<para align="left"><font face="times" size=9><b>Cash</b></font></para>',
+                           style=ValuationTable.style_sheet['SubHeading'])
         ret = [[Table([[subhed]], colWidths=[reduce(lambda x, y: x + y, ValuationTable.column_widths)])]]
         for curr in data:
             ret.append([ValuationTable.format_cash_line(curr, na)])
@@ -158,13 +177,13 @@ class ValuationTable(LongTable):
             ValuationTable.markup_detail_field(cash['balance'], 'right'),
             ValuationTable.markup_detail_field("", 'left')
         ]
-        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm], style=ValuationTable.heading_style)
+        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm], style=ValuationTable.get_table_style())
 
 
     @staticmethod
     def get_table_style():
         return TableStyle([
-            ('FONT', (0, 0), (-1, -1), 'Times-Bold', 10),
+            ('FONT', (0, 0), (-1, -1), 'Times-Bold', 9),
             #('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
             #('ALIGN', (0, 0), (0, 0), 'LEFT'),
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
@@ -191,15 +210,15 @@ class ValuationTable(LongTable):
         return '<para align="{0}"><font face="times" size=12><b>{1}</b></font></para>'.format(aln, heading)
 
     @staticmethod
-    def format_data(data):
+    def format_data(data, tier=0):
         tabdata = []
         for line in data:
             if isinstance(line, str):
-                tabdata.append([ValuationTable.markup_subheading(line)])
+                tabdata.append([ValuationTable.markup_subheading(line, tier)])
             elif isinstance(line, dict):
                 tabdata.append(ValuationTable.detail_line(line))
             else:
-                tabdata.extend(ValuationTable.format_data(line))
+                tabdata.extend(ValuationTable.format_data(line, tier+1))
         return tabdata
 
     @staticmethod
@@ -213,13 +232,14 @@ class ValuationTable(LongTable):
             ValuationTable.markup_detail_field(line['income'], 'right'),
             ValuationTable.markup_detail_field(line['yield'], 'right')]
 
-        return [Table([out], colWidths=ValuationTable.column_widths, style=ValuationTable.heading_style)]
+        return [Table([out], colWidths=ValuationTable.column_widths, style=ValuationTable.get_table_style())]
 
     @staticmethod
-    def markup_subheading(line):
+    def markup_subheading(line, tier):
+        indent = 10 * tier
         return Table(
-            [[Paragraph('<para align="left"><font face="times" size=9><b>' + line + '</b></font></para>',
-                        style=ValuationTable.style_sheet["Body"])]],
+            [[Paragraph('<para align="left" lindent="{0}"><font face="times" size=9><b>{1}</b></font></para>'.format(
+                indent, line), style=ValuationTable.style_sheet["Body"])]],
             colWidths=[reduce(lambda x, y: x + y, ValuationTable.column_widths)],
             rowHeights=None,
             style=ValuationTable.get_table_style())
