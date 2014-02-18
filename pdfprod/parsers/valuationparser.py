@@ -16,6 +16,7 @@ class ValuationData():
                 for datatype in printtag:
                     if datatype.tag == 'Valuation':
                         self.holdings = self.parse_sector(datatype)
+                        self.totals = self.parse_val_totals(datatype)
                         self.valuation_date = datatype.findtext("./ValHeader/Date")
                         self.valuation_cash = self.parse_cash(datatype)
                     elif datatype.tag == 'NameAndAddress':
@@ -24,6 +25,44 @@ class ValuationData():
                         self.business_getter = datatype.findtext('./BusinessGetterCode')
             elif printtag.tag == 'Routing':
                 self.person_code = printtag.findtext("./Header1/PersonCode")
+
+    def parse_val_totals(self, data):
+
+        stock_tots = []
+        val_tots = []
+        for sub in data:
+            if sub.tag == 'StockTotal':
+                stock_tots.append(self.extract_stock_totals(sub))
+            elif sub.tag == 'ValTotal':
+                val_tots.append(self.extract_val_totals(sub))
+
+        return {
+            'stock_totals': stock_tots,
+            'val_totals': val_tots
+        }
+
+    @staticmethod
+    def extract_stock_totals(tots):
+
+        return {
+            "cost": tots.findtext("./Cost"),
+            "value": tots.findtext("./Value"),
+            "income": tots.findtext("./Income"),
+            "yield": tots.findtext("./Yield"),
+            "accrued_interest": tots.findtext("./TotalAccruedInterest"),
+            "account_number": tots.findtext("./AccountNumber")
+        }
+
+    @staticmethod
+    def extract_val_totals(tots):
+
+        return {
+            "cost": tots.findtext("./Cost"),
+            "value": tots.findtext("./Value"),
+            "income": tots.findtext("./Income"),
+            "yield": tots.findtext("./Yield"),
+            "account_number": tots.findtext("./AccountNumber")
+        }
 
     def add_na_data(self, data):
 
@@ -102,7 +141,8 @@ class ValuationData():
 if __name__ == "__main__":
 
     import pprint
-    val = ValuationData(r"C:\Users\user\Desktop\testftp\inputxml\TESTVALUATION.xml")
+    val = ValuationData(r"C:\Users\user\Desktop\testftp\inputxml\TESTVALUATION2.xml")
     pp = pprint.PrettyPrinter(indent=2)
     pp.pprint(val.holdings)
     pp.pprint(val.valuation_cash)
+    pp.pprint(val.totals)

@@ -35,8 +35,8 @@ class ValuationPrint():
         #self.styleN = styles['Normal']
         self.doc = BaseDocTemplate(filename)
         self.val_template = PageTemplate(id='valuation',
-                                         frames=[Frame(self.lmargin, 7.5*units.cm,
-                                                       19*units.cm, 13*units.cm, id='table',
+                                         frames=[Frame(self.lmargin, 5*units.cm,
+                                                       19*units.cm, 15.5*units.cm, id='table',
                                                        showBoundary=0)],
                                          onPage=self.setup_page)
         self.doc.addPageTemplates(self.val_template)
@@ -82,6 +82,7 @@ class ValuationPrint():
                                             'Price', 'Value', 'Est. Income', 'Yield (%)'])]]
         dta.extend(ValuationTable.format_data(self.data.holdings))
         dta.extend(ValuationTable.format_cash_lines(self.data.valuation_cash, self.data.name_and_address))
+        dta.extend(ValuationTable.format_total_lines(self.data.totals))
         story.append(ValuationTable(dta))
         self.doc.build(story)
 
@@ -124,6 +125,24 @@ class ValuationTable(LongTable):
     }
 
     @staticmethod
+    def format_total_lines(data):
+        lines = []
+        for typ in data:
+            if typ == 'val_totals':
+                for tot in data[typ]:
+                    lines.append([ValuationTable.format_total_line(tot)])
+        return lines
+
+    @staticmethod
+    def format_total_line(totals):
+        paras = [
+            Paragraph('Grand Total', style=ValuationTable.style_sheet['SubHeading']),
+            Paragraph(r'<para align="right">'+totals["value"]+'</para>', style=ValuationTable.style_sheet['SubHeading'])
+        ]
+        return Table([paras], colWidths=[10*units.cm, 4.2*units.cm, 4.6*units.cm], style=ValuationTable.heading_style)
+
+
+    @staticmethod
     def format_cash_lines(data, na):
         subhed = Paragraph('Cash', style=ValuationTable.style_sheet['SubHeading'])
         ret = [[Table([[subhed]], colWidths=[reduce(lambda x, y: x + y, ValuationTable.column_widths)])]]
@@ -135,7 +154,7 @@ class ValuationTable(LongTable):
     def format_cash_line(cash, na):
         paras = [
             ValuationTable.markup_detail_field(na["client_name"]+" "+na["account_type"]+" "+na["account_number"]+" "+
-                                               cash["currency"], 'left'),
+                                               cash["currency"]+" "+cash["account_type"], 'left'),
             ValuationTable.markup_detail_field(cash['balance'], 'right'),
             ValuationTable.markup_detail_field("", 'left')
         ]
