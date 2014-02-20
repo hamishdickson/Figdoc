@@ -38,6 +38,6 @@ if __name__ == '__main__':
 
     import os
     r = FormRunner(r"C:\Users\user\Desktop\testftp\inputxml" +
-                   r"\TESTVALUATION2.xml")
+                   r"\CONTBD.09213F021KB.PO.20131216.105400.xml")
     r.produce_pdf(r"C:\Users\user\Desktop\testftp\pdfs")
-    os.system(r'start "" /max "C:\Users\User\Desktop\testftp\pdfs\TESTVALUATION2.pdf"')
+    os.system(r'start "" /max "C:\Users\User\Desktop\testftp\pdfs\CONTBD.09213F021KB.PO.20131216.105400.pdf"')
