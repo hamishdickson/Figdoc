@@ -15,7 +15,7 @@ class PdfProducer():
     def __init__(self, form, out_file_name):
 
         self.form = self._parse_xml(form)
-        self.styles = self._extract_elements(self.form, 'Style')
+        self.styles = self._create_style_dict(self._extract_elements(self.form, 'Style'))
         self.pages = self._extract_elements(self.form, 'Page')
         self.canvas = None
         self.out_file_name = out_file_name
@@ -81,6 +81,13 @@ class PdfProducer():
         components = self._extract_elements(page, 'Component')
         map(lambda c: self._render_component(c, canvas, print_code), components)
 
+    def _create_style_dict(self, styles):
+
+        out = {}
+        for style in styles:
+            out[style.findtext("./Name")] = style
+        return out
+
     def _extract_print_code(self, page):
 
         return page.attrib["print_code"]
@@ -89,8 +96,13 @@ class PdfProducer():
 
         canvas.saveState()
         component_type = self._extract_component_type(component)
-        processor = importlib.import_module("pdfprod.{0}".format(component_type))
-        processor.render_on(canvas, self.data[print_code], self.styles)
+        processor = importlib.import_module("pdfprod.components.{0}".format(component_type))
+        cmpt = processor.Component(canvas, component, self.styles)
+        if cmpt.dynamic:
+            cmpt.render(self.data[print_code])
+        else:
+            cmpt.render()
+
         canvas.restoreState()
 
     def _extract_component_type(self, component):
@@ -99,9 +111,10 @@ class PdfProducer():
 
 if __name__ == '__main__':
 
-    pp = PdfProducer(r"C:\Users\User\Desktop\testftp\cnformxml.xml", "jattest.pdf")
-    pp.produce_pdf(r"C:\Users\user\Desktop\testftp\inputxml" +
-                   r"\CONTBD.09213F021KB.PO.20131216.105400.xml",
-                   r"C:\Users\user\Desktop\testftp\pdfs")
     import os
-    os.system(r'start "" /max "C:\Users\User\Desktop\testftp\pdfs\jattest.pdf"')
+    usr = os.getenv('USERPROFILE')
+    pp = PdfProducer(usr+r"\Documents\GitHub\Figdoc\pdfprod\forms\contract_note_template.xml", "jattest.pdf")
+    pp.produce_pdf(usr+r"\Desktop\testftp\inputxml" +
+                   r"\CONTBD.09213F021KB.PO.20131216.105400.xml",
+                   usr+r"\Desktop\testftp\pdfs")
+    os.system(r'start "" /max '+usr+r'"\Desktop\testftp\pdfs\jattest.pdf"')

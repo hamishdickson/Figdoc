@@ -75,7 +75,7 @@ class ContractNote():
             return ''
 
 if __name__ == '__main__':
-    testcn = ContractNote(r"C:\Users\talbotj\desktop\testftp\inputxml\CONTBD.09213F0211U.PO.20131205.130119.xml")
+    testcn = ContractNote(r"C:\Users\User\desktop\testftp\inputxml\CONTBD.09213F0211U.PO.20131205.130119.xml")
     print testcn.account
     print testcn.quantity
     print testcn.r1

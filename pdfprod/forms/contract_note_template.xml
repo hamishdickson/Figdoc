@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="windows-1252" standalone="yes"?>
+<Document>
+<Style>
+<Name>Heading</Name>
+<Font>Helvetica-Bold</Font>
+<Size>14</Size>
+</Style>
+<Style>
+<Name>SubHeading</Name>
+<Font>Helvetica</Font>
+<Size>9</Size>
+</Style>
+<Page print_code="CONTBD">
+<Component type="textbox">
+<Content>Contract Note</Content>
+<LeftPos>2</LeftPos>
+<BottomPos>20</BottomPos>
+<Style>Heading</Style>
+</Component>
+<Component type="textbox">
+<Content>Account Name:</Content>
+<LeftPos>2</LeftPos>
+<BottomPos>18.2</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="dynamictext">
+<Content>
+<Text>{0}</Text>
+<Variables>
+<Variable>account_name</Variable>
+</Variables>
+</Content>
+<LeftPos>5.5</LeftPos>
+<Width>6</Width>
+<BottomPos>18.09</BottomPos>
+<Height>0.4</Height>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Account Reference:</Content>
+<LeftPos>2</LeftPos>
+<BottomPos>16.59</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="dynamictext">
+<Content>
+<Text>{0}/{1}</Text>
+<Variables>
+<Variable>account</Variable>
+<Variable>business_getter</Variable>
+</Variables>
+</Content>
+<LeftPos>5.5</LeftPos>
+<Width>6</Width>
+<BottomPos>16.5</BottomPos>
+<Height>0.4</Height>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Contract Reference:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>19</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Contract Date:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>18.6</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Contract Time:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>18.2</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Order Type:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>17.8</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Stock Code:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>17.4</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Content>Venue:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>17</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="textbox">
+<Type>text</Type>
+<Content>Conunterparty:</Content>
+<LeftPos>12</LeftPos>
+<BottomPos>16.6</BottomPos>
+<Style>SubHeading</Style>
+</Component>
+<Component type="line">
+<Weight>1</Weight>
+<Colour>black</Colour>
+<StartLeftPos>2</StartLeftPos>
+<StartBottomPos>16</StartBottomPos>
+<EndLeftPos>19</EndLeftPos>
+<EndBottomPos>16</EndBottomPos>
+</Component>
+</Page>
+</Document>
